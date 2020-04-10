@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   isModalOpen: false,
-  storyPointSelectedValue: 0,
+  storyPointSelectedValue: 1,
 };
 
 export default function storyPoint(state = initialState, action: any) {

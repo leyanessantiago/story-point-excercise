@@ -1,29 +1,42 @@
-import React, {FunctionComponent} from 'react';
-import {View, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native';
+import React, {FunctionComponent, useEffect, useRef} from 'react';
+import {View, Text, TouchableWithoutFeedback, TouchableOpacity, Animated} from 'react-native';
 import CloseIcon from './CloseIcon';
 import styles from './styles';
 
 interface Props {
-    isOpen: boolean;
-    headerText: string;
-    onClose: () => void;
+  isOpen: boolean;
+  headerText: string;
+  onClose: () => void;
 }
 
 const Modal: FunctionComponent<Props> = (props) => {
-    const {isOpen, headerText, onClose, children} = props;
+  const { isOpen, headerText, onClose, children } = props;
 
-    const {
+  const {
         modalBackDrop,
         modal,
         modalHeader,
         modalHeaderText,
     } = styles;
 
-    return isOpen ? (
+  const animatedStyle = useRef({ opacity: new Animated.Value(0) }).current;
+
+  useEffect(() => {
+    if (isOpen) {
+      Animated.timing(animatedStyle.opacity, {
+        toValue: 1,
+        duration: 300,
+      }).start();
+    } else {
+      animatedStyle.opacity.setValue(0);
+    }
+  }, [isOpen]);
+
+  return isOpen ? (
         <TouchableWithoutFeedback onPress={onClose}>
-            <View style={modalBackDrop}>
+            <Animated.View style={[modalBackDrop, animatedStyle]}>
                 <TouchableWithoutFeedback>
-                    <View style={modal}>
+                    <Animated.View style={[modal, animatedStyle]}>
                         <View style={modalHeader}>
                             <Text style={modalHeaderText}>
                                 {headerText}
@@ -35,9 +48,9 @@ const Modal: FunctionComponent<Props> = (props) => {
                         <View>
                             {children}
                         </View>
-                    </View>
+                    </Animated.View>
                 </TouchableWithoutFeedback>
-            </View>
+            </Animated.View>
         </TouchableWithoutFeedback>
     ) : null;
 };
