@@ -18,7 +18,7 @@ interface Props {
   handleSelectStoryPoint: (value: number) => void;
 }
 
-const StoryPoints: FunctionComponent<Props> = (props) => {
+export const StoryPoints: FunctionComponent<Props> = (props) => {
   const {
     isModalOpen,
     storyPointSelectedValue,
@@ -38,7 +38,7 @@ const StoryPoints: FunctionComponent<Props> = (props) => {
 
   return (
     <>
-      <TouchableOpacity style={storyPointButton} onPress={openStoryPointModal}>
+      <TouchableOpacity testID="story-points-button" style={storyPointButton} onPress={openStoryPointModal}>
         <View style={storyPointButtonNumberWrapper}>
           <Text style={storyPointButtonNumber}>{storyPointSelectedValue}</Text>
         </View>

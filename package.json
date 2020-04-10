@@ -7,6 +7,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
+    "test-coverage": "jest --coverage",
     "lint": "tslint 'src/**/*.{ts,tsx}'"
   },
   "dependencies": {
@@ -45,7 +46,16 @@
     "typescript": "~3.8.3"
   },
   "jest": {
-    "preset": "jest-expo-enzyme"
+    "preset": "jest-expo-enzyme",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{ts,tsx}",
+      "!**/coverage/**",
+      "!**/node_modules/**",
+      "!**/setupTests.ts"
+    ]
   },
   "private": true
 }
